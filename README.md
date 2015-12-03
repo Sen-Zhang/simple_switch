@@ -2,6 +2,8 @@
 
 Simple Feature Switch Engine
 
+[![Code Climate](https://codeclimate.com/github/Sen-Zhang/simple_switch/badges/gpa.svg)](https://codeclimate.com/github/Sen-Zhang/simple_switch)
+
 
 ## Requirement
 * Ruby 2.0+
