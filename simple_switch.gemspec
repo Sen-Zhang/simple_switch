@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors     = ['Sen Zhang']
   spec.email       = ['solowolf21@gmail.com']
   spec.summary     = %q{Simple Feature Switch Engine}
-  spec.description = %q{Simple Feature Switch Engine}
+  spec.description = %q{Simple Feature Switch Engine for Rails App}
   spec.homepage    = 'https://github.com/Sen-Zhang/simple_switch'
   spec.license     = 'MIT'
 
@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rails', '~> 4.2.0'
-  spec.add_development_dependency 'rspec', '~> 3.3.0'
+  spec.add_development_dependency 'rails', '~> 4.2', '>= 4.2.0'
+  spec.add_development_dependency 'rspec', '~> 3.3', '>= 3.3.0'
 end
