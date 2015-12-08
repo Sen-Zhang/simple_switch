@@ -3,6 +3,7 @@
 Simple Feature Switch Engine
 
 [![Code Climate](https://codeclimate.com/github/Sen-Zhang/simple_switch/badges/gpa.svg)](https://codeclimate.com/github/Sen-Zhang/simple_switch)
+[![Build Status](https://travis-ci.org/Sen-Zhang/simple_switch.svg?branch=master)](https://travis-ci.org/Sen-Zhang/simple_switch)
 
 
 ## Requirement
