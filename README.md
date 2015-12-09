@@ -117,10 +117,10 @@ The following methods are only accessible in controllers:
 
 `feature_config_info` return a hash represents the current feature configuration condition.
 
-`turn_on(feature, env)` turn on a feature on a indicated environment.
+`turn_on(feature, env)` turn on a feature on an indicated environment.
 
     turn_on(:foo, :development)
 
-`turn_off(feature, env)` turn off a feature on a indicated environment.
+`turn_off(feature, env)` turn off a feature on an indicated environment.
 
     turn_off(:foo, :development)
