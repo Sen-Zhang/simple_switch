@@ -1,5 +1,7 @@
 module SimpleSwitch
   class Switch
+    attr_reader :feature_config
+
     def initialize
       @feature_config = load_config
     end
@@ -11,6 +13,8 @@ module SimpleSwitch
     private_class_method :new
 
     def on?(feature, env=Rails.env)
+      reload_config! if Rails.env.development?
+
       @feature_config[feature][env] if valid_feature_name_for_env?(feature, env)
     end
 

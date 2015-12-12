@@ -1,6 +1,9 @@
-require 'simple_switch/version'
+require 'simple_switch/engine'
 
 module SimpleSwitch
+  mattr_accessor :feature_store
+  @@feature_store = :database
+
   mattr_accessor :feature_config_file_dir
   @@feature_config_file_name = 'config'
 
@@ -14,11 +17,9 @@ module SimpleSwitch
   def self.feature_manager
     SimpleSwitch::Switch.instance
   end
-
-  class Engine < ::Rails::Engine
-  end
 end
 
+# TODO: is the following still in need?
 require 'simple_switch/switch'
 require 'simple_switch/shared_methods'
 require 'simple_switch/shared_controller_methods'
