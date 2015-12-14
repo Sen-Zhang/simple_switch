@@ -1,8 +1,10 @@
 module SimpleSwitch
-  class Switch
-    attr_reader :feature_config
+  class FeatureManagerYaml
+    attr_reader :feature_config, :file_dir, :file_name
 
     def initialize
+      @file_dir       = SimpleSwitch.feature_config_file_dir
+      @file_name      = SimpleSwitch.feature_config_file_name
       @feature_config = load_config
     end
 
@@ -13,7 +15,7 @@ module SimpleSwitch
     private_class_method :new
 
     def on?(feature, env=Rails.env)
-      reload_config! if Rails.env.development?
+      reload_config! if Rails.env == 'development'
 
       @feature_config[feature][env] if valid_feature_name_for_env?(feature, env)
     end
@@ -37,7 +39,7 @@ module SimpleSwitch
     private
 
     def file_path
-      Rails.root.join(SimpleSwitch::feature_config_file_dir, SimpleSwitch::feature_config_file_name)
+      Rails.root.join(file_dir, file_name)
     end
 
     def load_config
@@ -66,7 +68,7 @@ module SimpleSwitch
       return true if @feature_config.has_key?(feature)
 
       raise "Cannot find feature '#{feature}', check out your "\
-            "#{SimpleSwitch::feature_config_file_name} file."
+            "#{file_name} file."
     end
 
     def valid_feature_name_for_env?(feature, env=Rails.env)
@@ -75,7 +77,7 @@ module SimpleSwitch
       return true if @feature_config[feature].has_key?(env)
 
       raise "Cannot find environment '#{env}' for feature '#{feature}', "\
-            "check out your #{SimpleSwitch::feature_config_file_name} file."
+            "check out your #{file_name} file."
     end
   end
 end

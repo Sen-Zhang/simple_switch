@@ -10,7 +10,7 @@ module SimpleSwitch
 
       def copy_initializer
         copy_file 'feature_config_sample.yml',
-                  "#{SimpleSwitch::feature_config_file_dir}/#{SimpleSwitch::feature_config_file_name}"
+                  "#{SimpleSwitch.feature_config_file_dir}/#{SimpleSwitch.feature_config_file_name}"
       end
     end
 

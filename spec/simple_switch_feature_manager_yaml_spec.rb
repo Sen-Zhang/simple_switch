@@ -1,7 +1,26 @@
 require 'spec_helper'
 
-describe 'SimpleSwitch' do
-  describe 'Switch' do
+describe 'SimpleSwitchFeatureManagerYaml' do
+  describe 'FeatureManagerYaml' do
+    before(:each) { reset_yaml }
+
+    it 'feature_config returns the correct configuration' do
+      expected_config = HashWithIndifferentAccess.new({
+        foo: {
+          development: true,
+          test:        true,
+          production:  false
+        },
+        bar: {
+          development: true,
+          test:        false,
+          production:  true
+        }
+      })
+
+      expect(SimpleSwitch.feature_manager.feature_config).to eq(expected_config)
+    end
+
     it 'on? works fine' do
       allow(Rails).to receive(:env).and_return('development')
 
@@ -87,5 +106,32 @@ describe 'SimpleSwitch' do
         SimpleSwitch.feature_manager.update(:foo, :dev, false)
       }.to raise_error(RuntimeError, "Cannot find environment 'dev' for feature 'foo', check out your feature_config.yml file.")
     end
+  end
+
+  private
+  def reset_yaml
+    # reset feature_config.yml
+    File.open('spec/config/feature_config.yml', 'w') do |f|
+      init_hash = HashWithIndifferentAccess.new(
+        {
+          foo: {
+            development: true,
+            test:        true,
+            production:  false
+          },
+          bar: {
+            development: true,
+            test:        false,
+            production:  true
+          }
+        }
+      )
+
+      f.puts init_hash.to_hash.to_yaml
+    end
+
+    allow_any_instance_of(SimpleSwitch::FeatureManagerYaml).to receive(:file_path).and_return('spec/config/feature_config.yml')
+    allow(SimpleSwitch).to receive(:feature_store).and_return(:yml)
+    SimpleSwitch.feature_manager.send(:reload_config!)
   end
 end

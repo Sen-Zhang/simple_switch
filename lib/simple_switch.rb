@@ -15,12 +15,14 @@ module SimpleSwitch
   end
 
   def self.feature_manager
-    SimpleSwitch::Switch.instance
+    SimpleSwitch::FeatureManager.get_manager(feature_store)
   end
 end
 
 # TODO: is the following still in need?
-require 'simple_switch/switch'
+require 'simple_switch/feature_manager_db'
+require 'simple_switch/feature_manager_yaml'
+require 'simple_switch/feature_manager'
 require 'simple_switch/shared_methods'
 require 'simple_switch/shared_controller_methods'
 require 'simple_switch/action_controller/base'
