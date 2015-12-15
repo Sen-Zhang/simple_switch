@@ -1,5 +1,6 @@
 module SimpleSwitch
   class FeatureManagerYaml
+    include SimpleSwitch::ManagerSharedMethods
     attr_reader :feature_config, :file_dir, :file_name
 
     def initialize
@@ -13,16 +14,6 @@ module SimpleSwitch
     end
 
     private_class_method :new
-
-    def on?(feature, env=Rails.env)
-      reload_config! if Rails.env == 'development'
-
-      @feature_config[feature][env] if valid_feature_name_for_env?(feature, env)
-    end
-
-    def off?(feature, env=Rails.env)
-      !on?(feature, env)
-    end
 
     def update(feature, env, value)
       @feature_config[feature][env] = value if valid_feature_name_for_env?(feature, env)
@@ -46,10 +37,6 @@ module SimpleSwitch
       HashWithIndifferentAccess.new(YAML::load(File.open(file_path)))
     end
 
-    def reload_config!
-      @feature_config = load_config
-    end
-
     def save_to_yaml
       begin
         File.open(file_path, 'w') do |f|
@@ -62,22 +49,20 @@ module SimpleSwitch
       end
     end
 
-    def valid_feature_name?(feature)
-      reload_config! unless @feature_config.has_key?(feature)
+    def valid_feature_name_with_message?(feature)
+      return true if valid_feature_name_without_message?(feature)
 
-      return true if @feature_config.has_key?(feature)
-
-      raise "Cannot find feature '#{feature}', check out your "\
-            "#{file_name} file."
+      raise "Cannot find feature '#{feature}', check out your #{file_name} file."
     end
 
-    def valid_feature_name_for_env?(feature, env=Rails.env)
-      valid_feature_name?(feature)
-
-      return true if @feature_config[feature].has_key?(env)
+    def valid_feature_name_for_env_with_message?(feature, env=Rails.env)
+      return true if valid_feature_name_for_env_without_message?(feature, env)
 
       raise "Cannot find environment '#{env}' for feature '#{feature}', "\
             "check out your #{file_name} file."
     end
+
+    alias_method_chain :valid_feature_name?, :message
+    alias_method_chain :valid_feature_name_for_env?, :message
   end
 end

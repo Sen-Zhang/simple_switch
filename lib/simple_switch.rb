@@ -20,6 +20,7 @@ module SimpleSwitch
 end
 
 # TODO: is the following still in need?
+require 'simple_switch/manager_shared_methods'
 require 'simple_switch/feature_manager_db'
 require 'simple_switch/feature_manager_yaml'
 require 'simple_switch/feature_manager'
