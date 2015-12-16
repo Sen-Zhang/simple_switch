@@ -15,7 +15,7 @@ module SimpleSwitch
   end
 
   def self.feature_manager
-    SimpleSwitch::FeatureManager.get_manager(feature_store)
+    SimpleSwitch::FeatureManager.get_manager
   end
 end
 
