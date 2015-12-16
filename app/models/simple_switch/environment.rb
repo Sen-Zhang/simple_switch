@@ -3,6 +3,6 @@ module SimpleSwitch
     has_many :states, dependent: :destroy
     has_many :features, through: :states
 
-    validates_presence_of :name
+    validates :name, presence: true, uniqueness: true
   end
 end
