@@ -1,9 +1,13 @@
 ---
 foo:
-  development: true
-  test: true
-  production: false
+  description: Foo Feature
+  states:
+    development: true
+    test: true
+    production: false
 bar:
-  development: true
-  test: false
-  production: true
+  description: Bar Feature
+  states:
+    development: true
+    test: false
+    production: true

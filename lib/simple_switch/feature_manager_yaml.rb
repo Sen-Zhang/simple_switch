@@ -16,13 +16,13 @@ module SimpleSwitch
     private_class_method :new
 
     def update(feature, env, value)
-      @feature_config[feature][env] = value if valid_feature_name_for_env?(feature, env)
+      states(feature)[env] = value if valid_feature_name_for_env?(feature, env)
 
       save_to_yaml
     end
 
     def delete(feature)
-      @feature_config.delete(feature) if valid_feature_name?(feature)
+      feature_config.delete(feature) if valid_feature_name?(feature)
 
       save_to_yaml
     end

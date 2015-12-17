@@ -14,13 +14,13 @@ module SimpleSwitch
     private_class_method :new
 
     def update(feature, env, value)
-      @feature_config[feature][env][0] = value if valid_feature_name_for_env?(feature, env)
+      states(feature)[env][0] = value if valid_feature_name_for_env?(feature, env)
 
-      SimpleSwitch::State.update(@feature_config[feature][env][1], status: value)
+      SimpleSwitch::State.update(states(feature)[env][1], status: value)
     end
 
     def delete(feature)
-      @feature_config.delete(feature) if valid_feature_name?(feature)
+      feature_config.delete(feature) if valid_feature_name?(feature)
 
       SimpleSwitch::Feature.find_by_name(feature).destroy
     end
@@ -30,9 +30,15 @@ module SimpleSwitch
     def load_config
       features = SimpleSwitch::Feature.includes([:states, :environments]).all
 
-      HashWithIndifferentAccess.new(features.inject({}) do |hash, f|
-        hash.merge(f.name => f.states.inject({}) { |h, s| h.merge(s.environment.name => [s.status, s.id]) })
-      end)
+      HashWithIndifferentAccess.new(
+        features.inject({}) do |hash, f|
+          hash.merge(
+            f.name => {
+              description: f.description,
+              states:      f.states.inject({}) { |h, s| h.merge(s.environment.name => [s.status, s.id]) }
+            })
+        end
+      )
     end
 
     def valid_feature_name_with_message?(feature)

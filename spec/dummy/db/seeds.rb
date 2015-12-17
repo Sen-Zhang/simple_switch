@@ -1,6 +1,6 @@
 # features
-foo = SimpleSwitch::Feature.create(name: 'foo')
-bar = SimpleSwitch::Feature.create(name: 'bar')
+foo = SimpleSwitch::Feature.create(name: 'foo', description: 'Foo Feature')
+bar = SimpleSwitch::Feature.create(name: 'bar', description: 'Bar Feature')
 
 # environments
 dev  = SimpleSwitch::Environment.create(name: 'development')

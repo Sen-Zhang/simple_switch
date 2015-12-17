@@ -2,10 +2,10 @@ module SimpleSwitch
   module ManagerSharedMethods
 
     def on?(feature, env=Rails.env)
-      reload_config! if Rails.env == 'development'
+      reload_config! if env == 'development'
 
       if valid_feature_name_for_env?(feature, env)
-        config = feature_config[feature][env]
+        config = states(feature)[env]
 
         config.is_a?(Array) ? config[0] : config
       end
@@ -20,6 +20,10 @@ module SimpleSwitch
       @feature_config = load_config
     end
 
+    def states(feature)
+      feature_config[feature][:states]
+    end
+
     def valid_feature_name?(feature)
       reload_config! unless feature_config.has_key?(feature)
 
@@ -29,7 +33,7 @@ module SimpleSwitch
     def valid_feature_name_for_env?(feature, env)
       valid_feature_name?(feature)
 
-      feature_config[feature].has_key?(env)
+      states(feature).has_key?(env)
     end
 
   end

@@ -22,9 +22,10 @@ ActiveRecord::Schema.define(version: 20151216180633) do
   add_index "simple_switch_environments", ["name"], name: "index_simple_switch_environments_on_name"
 
   create_table "simple_switch_features", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name",                    null: false
+    t.string   "description", limit: 500
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "simple_switch_features", ["name"], name: "index_simple_switch_features_on_name"

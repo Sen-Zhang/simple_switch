@@ -1,17 +1,21 @@
 # Example:
 #
 # feature_foo:
-#   development: true
-#   test: true
-#   dev: true
-#   qa: true
-#   prodstage: true
-#   production: false
+#   description: Foo Feature
+#   states:
+#     development: true
+#     test: true
+#     dev: true
+#     qa: true
+#     prodstage: true
+#     production: false
 #
 # feature_bar:
-#   development: true
-#   test: true
-#   dev: true
-#   qa: true
-#   prodstage: true
-#   production: true
+#   description: Bar Feature
+#   states:
+#     development: true
+#     test: true
+#     dev: true
+#     qa: true
+#     prodstage: true
+#     production: true

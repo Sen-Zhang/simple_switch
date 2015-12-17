@@ -7,14 +7,20 @@ describe 'SimpleSwitchFeatureManagers' do
     it 'feature_config returns the correct configuration' do
       expected_config = HashWithIndifferentAccess.new({
         foo: {
-          development: [true, 1],
-          test:        [true, 2],
-          production:  [false, 3]
+          description: 'Foo Feature',
+          states:      {
+            development: [true, 1],
+            test:        [true, 2],
+            production:  [false, 3]
+          }
         },
         bar: {
-          development: [true, 4],
-          test:        [false, 5],
-          production:  [true, 6]
+          description: 'Bar Feature',
+          states:      {
+            development: [true, 4],
+            test:        [false, 5],
+            production:  [true, 6]
+          }
         }
       })
 
@@ -52,14 +58,20 @@ describe 'SimpleSwitchFeatureManagers' do
     it 'feature_config returns the correct configuration' do
       expected_config = HashWithIndifferentAccess.new({
         foo: {
-          development: true,
-          test:        true,
-          production:  false
+          description: 'Foo Feature',
+          states:      {
+            development: true,
+            test:        true,
+            production:  false
+          }
         },
         bar: {
-          development: true,
-          test:        false,
-          production:  true
+          description: 'Bar Feature',
+          states:      {
+            development: true,
+            test:        false,
+            production:  true
+          }
         }
       })
 
@@ -104,14 +116,20 @@ describe 'SimpleSwitchFeatureManagers' do
       init_hash = HashWithIndifferentAccess.new(
         {
           foo: {
-            development: true,
-            test:        true,
-            production:  false
+            description: 'Foo Feature',
+            states:      {
+              development: true,
+              test:        true,
+              production:  false
+            }
           },
           bar: {
-            development: true,
-            test:        false,
-            production:  true
+            description: 'Bar Feature',
+            states:      {
+              development: true,
+              test:        false,
+              production:  true
+            }
           }
         }
       )

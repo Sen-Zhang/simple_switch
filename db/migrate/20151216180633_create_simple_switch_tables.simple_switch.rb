@@ -2,6 +2,7 @@ class CreateSimpleSwitchTables < ActiveRecord::Migration
   def change
     create_table :simple_switch_features do |t|
       t.string :name, null: false, index: true
+      t.string :description, limit: 500
 
       t.timestamps null: false
     end
