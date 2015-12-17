@@ -40,8 +40,7 @@ describe 'SimpleSwitchFeatureManagers' do
     end
 
     it 'delete works fine' do
-      error_msg = "Cannot find feature 'foo', check out your database."
-      assert_delete_works_fine(error_msg)
+      assert_delete_works_fine
     end
 
     it 'raise errors correctly' do
@@ -91,8 +90,7 @@ describe 'SimpleSwitchFeatureManagers' do
     end
 
     it 'delete works fine' do
-      error_msg = "Cannot find feature 'foo', check out your feature_config.yml file."
-      assert_delete_works_fine(error_msg)
+      assert_delete_works_fine
     end
 
     it 'raise errors correctly' do
@@ -212,14 +210,14 @@ describe 'SimpleSwitchFeatureManagers' do
     expect(SimpleSwitch.feature_manager.on?(:bar, :test)).to be_truthy
   end
 
-  def assert_delete_works_fine(err_msg)
+  def assert_delete_works_fine
     expect(SimpleSwitch.feature_manager.on?(:foo, :development)).to be_truthy
+    expect(SimpleSwitch.feature_manager.on?(:foo, :production)).to be_falsey
 
-    SimpleSwitch.feature_manager.delete(:foo)
+    expect { SimpleSwitch.feature_manager.delete(:foo) }.to_not raise_error
 
-    expect {
-      SimpleSwitch.feature_manager.on?(:foo, :development)
-    }.to raise_error(RuntimeError, err_msg)
+    expect(SimpleSwitch.feature_manager.on?(:foo, :development)).to be_truthy
+    expect(SimpleSwitch.feature_manager.on?(:foo, :production)).to be_truthy
   end
 
   def assert_raise_errors_correctly(err_msg_1, err_msg_2)

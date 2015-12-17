@@ -4,10 +4,14 @@ module SimpleSwitch
     def on?(feature, env=Rails.env)
       reload_config! if env == 'development'
 
-      if valid_feature_name_for_env?(feature, env)
-        config = states(feature)[env]
+      begin
+        if valid_feature_name_for_env?(feature, env)
+          config = states(feature)[env]
 
-        config.is_a?(Array) ? config[0] : config
+          config.is_a?(Array) ? config[0] : config
+        end
+      rescue
+        true
       end
     end
 
