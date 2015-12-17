@@ -19,7 +19,6 @@ module SimpleSwitch
   end
 end
 
-# TODO: is the following still in need?
 require 'simple_switch/manager_shared_methods'
 require 'simple_switch/feature_manager_db'
 require 'simple_switch/feature_manager_yaml'
@@ -28,3 +27,4 @@ require 'simple_switch/shared_methods'
 require 'simple_switch/shared_controller_methods'
 require 'simple_switch/action_controller/base'
 require 'simple_switch/active_record/base'
+require 'simple_switch/railtie'

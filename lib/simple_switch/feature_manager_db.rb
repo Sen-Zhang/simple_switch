@@ -13,6 +13,35 @@ module SimpleSwitch
 
     private_class_method :new
 
+    def has_feature?(feature)
+      SimpleSwitch::Feature.find_by_name(feature).present?
+    end
+
+    def add_feature(options)
+      feature = SimpleSwitch::Feature.find_or_create_by(name: options[:name])
+      feature.update(description: options[:description])
+
+      reload_config!
+    end
+
+    def has_environment?(environment)
+      SimpleSwitch::Environment.find_by_name(environment).present?
+    end
+
+    def add_environment(options)
+      SimpleSwitch::Environment.find_or_create_by(name: options[:name])
+
+      reload_config!
+    end
+
+    def add_state(options)
+      feature     = SimpleSwitch::Feature.find_by_name(options[:feature])
+      environment = SimpleSwitch::Environment.find_by_name(options[:environment])
+
+      feature.states.create(status: options[:status], environment: environment)
+      reload_config!
+    end
+
     def update(feature, env, value)
       states(feature)[env][0] = value if valid_feature_name_for_env?(feature, env)
 
