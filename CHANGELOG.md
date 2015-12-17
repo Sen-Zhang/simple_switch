@@ -11,7 +11,7 @@ Changes:
 * Add tests
 * Refactor APIs for action_controller
 
-## [0.3.0](https://github.com/Sen-Zhang/simple_switch/releases/tag/v0.3.0) (2015-12-xx)
+## [0.3.0](https://github.com/Sen-Zhang/simple_switch/releases/tag/v0.3.0) (2015-12-17)
 
 Changes:
 
