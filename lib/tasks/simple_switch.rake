@@ -52,6 +52,52 @@ namespace :simple_switch do
     abort 'Feature configuration added.'
   end
 
+  # eg: bundle exec rake simple_switch:turn_on feature='foo' environment='test'
+  desc 'Turn on feature for an environment'
+  task :turn_on => :environment do
+    check_strategy
+
+    feature     = ENV['feature']
+    environment = ENV['environment']
+
+    feature_manager = SimpleSwitch.feature_manager
+
+    abort 'Feature name is required.' if feature.blank?
+    abort "Feature #{feature} does not exist." unless feature_manager.has_feature?(feature)
+    abort 'Environment name is required.' if environment.blank?
+    abort "Environment #{environment} does not exist, add this environment first." unless feature_manager.has_environment?(environment)
+
+    begin
+      feature_manager.turn_on(feature, environment)
+      abort "Feature '#{feature}' has been turned on for environment '#{environment}'."
+    rescue
+      abort "Feature '#{feature}' is not configured on environment '#{environment}'."
+    end
+  end
+
+  # eg: bundle exec rake simple_switch:turn_off feature='foo' environment='test'
+  desc 'Turn off feature for an environment'
+  task :turn_off => :environment do
+    check_strategy
+
+    feature     = ENV['feature']
+    environment = ENV['environment']
+
+    feature_manager = SimpleSwitch.feature_manager
+
+    abort 'Feature name is required.' if feature.blank?
+    abort "Feature #{feature} does not exist." unless feature_manager.has_feature?(feature)
+    abort 'Environment name is required.' if environment.blank?
+    abort "Environment #{environment} does not exist, add this environment first." unless feature_manager.has_environment?(environment)
+
+    begin
+      feature_manager.turn_off(feature, environment)
+      abort "Feature '#{feature}' has been turned off for environment '#{environment}'."
+    rescue
+      abort "Feature '#{feature}' is not configured on environment '#{environment}'."
+    end
+  end
+
   private
   def check_strategy
     # TODO: Temporarily disable rake tasks for yml strategy
