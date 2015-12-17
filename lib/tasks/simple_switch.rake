@@ -3,6 +3,8 @@ namespace :simple_switch do
   # eg: bundle exec rake simple_switch:add_feature name='Foo' description='Foo feature'
   desc 'Add a feature'
   task :add_feature => :environment do
+    check_strategy
+
     name            = ENV['name']
     description     = ENV['description']
     feature_manager = SimpleSwitch.feature_manager
@@ -17,6 +19,8 @@ namespace :simple_switch do
   # eg: bundle exec rake simple_switch:add_environment name='test'
   desc 'Add an environment'
   task :add_environment => :environment do
+    check_strategy
+
     name            = ENV['name']
     feature_manager = SimpleSwitch.feature_manager
 
@@ -30,6 +34,8 @@ namespace :simple_switch do
   # eg: bundle exec rake simple_switch:add_feature_config feature='foo' environment='test' status=true
   desc 'Add feature configuration'
   task :add_feature_config => :environment do
+    check_strategy
+
     feature     = ENV['feature']
     environment = ENV['environment']
     status      = ENV['status']
@@ -44,5 +50,12 @@ namespace :simple_switch do
     feature_manager.add_state(feature: feature, environment: environment, status: status)
 
     abort 'Feature configuration added.'
+  end
+
+  private
+  def check_strategy
+    # TODO: Temporarily disable rake tasks for yml strategy
+    abort "'yml' strategy does not support this task, please modify feature"\
+          ' configuration yaml file instead.' if SimpleSwitch.feature_store != :database
   end
 end
