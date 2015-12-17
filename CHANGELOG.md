@@ -10,3 +10,12 @@ Changes:
 
 * Add tests
 * Refactor APIs for action_controller
+
+## [0.3.0](https://github.com/Sen-Zhang/simple_switch/releases/tag/v0.3.0) (2015-12-xx)
+
+Changes:
+
+* Minor refactor
+* Add another feature management strategy: store features and configurations in database instead of yml
+* Add turn_on and turn_off APIs
+* Add rake tasks to manage features and configurations for database strategy
