@@ -35,6 +35,18 @@ describe 'SimpleSwitchFeatureManagers' do
       assert_off_works_fine
     end
 
+    it 'turn_on works fine' do
+      err_msg_1 = "Cannot find feature 'foobar', check out your database."
+      err_msg_2 = "Cannot find environment 'qa' for feature 'foo', check out your database."
+      assert_turn_on_works_fine(err_msg_1, err_msg_2)
+    end
+
+    it 'turn_off works fine' do
+      err_msg_1 = "Cannot find feature 'foobar', check out your database."
+      err_msg_2 = "Cannot find environment 'qa' for feature 'foo', check out your database."
+      assert_turn_off_works_fine(err_msg_1, err_msg_2)
+    end
+
     it 'update works fine' do
       assert_update_works_fine
     end
@@ -83,6 +95,18 @@ describe 'SimpleSwitchFeatureManagers' do
 
     it 'off? works fine' do
       assert_off_works_fine
+    end
+
+    it 'turn_on works fine' do
+      err_msg_1 = "Cannot find feature 'foobar', check out your feature_config.yml file."
+      err_msg_2 = "Cannot find environment 'qa' for feature 'foo', check out your feature_config.yml file."
+      assert_turn_on_works_fine(err_msg_1, err_msg_2)
+    end
+
+    it 'turn_off works fine' do
+      err_msg_1 = "Cannot find feature 'foobar', check out your feature_config.yml file."
+      err_msg_2 = "Cannot find environment 'qa' for feature 'foo', check out your feature_config.yml file."
+      assert_turn_off_works_fine(err_msg_1, err_msg_2)
     end
 
     it 'update works fine' do
@@ -194,6 +218,32 @@ describe 'SimpleSwitchFeatureManagers' do
 
     expect(SimpleSwitch.feature_manager.off?(:foo, :production)).to be_truthy
     expect(SimpleSwitch.feature_manager.off?(:bar, :production)).to be_falsey
+  end
+
+  def assert_turn_on_works_fine(err_msg_1, err_msg_2)
+    allow(Rails).to receive(:env).and_return('production')
+
+    expect(SimpleSwitch.feature_manager.on?(:foo)).to be_falsey
+
+    SimpleSwitch.feature_manager.turn_on(:foo, :production)
+
+    expect(SimpleSwitch.feature_manager.on?(:foo)).to be_truthy
+
+    expect { SimpleSwitch.feature_manager.turn_on(:foobar, :production) }.to raise_error(err_msg_1)
+    expect { SimpleSwitch.feature_manager.turn_on(:foo, :qa) }.to raise_error(err_msg_2)
+  end
+
+  def assert_turn_off_works_fine(err_msg_1, err_msg_2)
+    allow(Rails).to receive(:env).and_return('development')
+
+    expect(SimpleSwitch.feature_manager.on?(:foo)).to be_truthy
+
+    SimpleSwitch.feature_manager.turn_off(:foo, :development)
+
+    expect(SimpleSwitch.feature_manager.on?(:foo)).to be_falsey
+
+    expect { SimpleSwitch.feature_manager.turn_off(:foobar, :production) }.to raise_error(err_msg_1)
+    expect { SimpleSwitch.feature_manager.turn_off(:foo, :qa) }.to raise_error(err_msg_2)
   end
 
   def assert_update_works_fine

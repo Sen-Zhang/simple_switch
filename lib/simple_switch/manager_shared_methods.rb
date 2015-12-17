@@ -19,6 +19,14 @@ module SimpleSwitch
       !on?(feature, env)
     end
 
+    def turn_on(feature, env)
+      update(feature, env, true)
+    end
+
+    def turn_off(feature, env)
+      update(feature, env, false)
+    end
+
     private
     def reload_config!
       @feature_config = load_config

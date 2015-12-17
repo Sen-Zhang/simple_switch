@@ -6,11 +6,11 @@ module SimpleSwitch
     end
 
     def turn_on(feature, env)
-      SimpleSwitch.feature_manager.update(feature, env, true)
+      SimpleSwitch.feature_manager.turn_on(feature, env)
     end
 
     def turn_off(feature, env)
-      SimpleSwitch.feature_manager.update(feature, env, false)
+      SimpleSwitch.feature_manager.turn_off(feature, env)
     end
 
   end
